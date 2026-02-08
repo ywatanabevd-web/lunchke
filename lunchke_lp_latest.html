@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ランチケ｜iDで払うだけ。食事補助を最小工数で。</title>
+  <meta name="description" content="賃上げより、手取り実感。毎日効く福利厚生を、最小工数で。iD決済でスマートに導入。導入相談受付中。">
+  <style>
+    :root{
+      /* Redesign theme */
+      --bg:#070A12;
+      --bg2:#0B1222;
+      --card: rgba(255,255,255,.06);
+      --line: rgba(255,255,255,.12);
+
+      --text:#F6F7FB;
+      --muted: rgba(246,247,251,.72);
+
+      /* Accent (お任せ) */
+      --a1:#7C5CFF; /* violet */
+      --a2:#00D3A7; /* mint */
+      --a3:#FF5B3D; /* coral */
+
+      --shadow: 0 30px 90px rgba(0,0,0,.45);
+      --shadow2: 0 18px 50px rgba(0,0,0,.35);
+
+      --r2: 26px;
+      --max: 1040px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+        "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 520px at 15% 5%, rgba(124,92,255,.45), rgba(124,92,255,0) 60%),
+        radial-gradient(900px 520px at 85% 15%, rgba(0,211,167,.35), rgba(0,211,167,0) 60%),
+        radial-gradient(1200px 700px at 55% -10%, rgba(255,91,61,.26), rgba(255,91,61,0) 58%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+    }
+    a{color:inherit}
+    .container{max-width:var(--max); margin:0 auto; padding:0 22px;}
+
+    /* NAV */
+    .nav{
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(7,10,18,.62);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .nav-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; padding:14px 0;
+    }
+    .brand{display:flex; align-items:center; gap:12px; min-width: 220px;}
+    .mark{
+      width:42px; height:42px; border-radius: 16px;
+      border:1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.20), rgba(255,255,255,0) 60%),
+        linear-gradient(135deg, rgba(124,92,255,.95), rgba(0,211,167,.85));
+      box-shadow: var(--shadow2);
+      display:grid; place-items:center;
+      font-weight: 1000;
+      letter-spacing: .02em;
+    }
+    .brand strong{font-size:14px; letter-spacing:.03em;}
+    .brand span{display:block; font-size:12px; color:var(--muted); margin-top:2px;}
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      font-weight: 950;
+      text-decoration:none;
+      border: 1px solid transparent;
+      cursor:pointer;
+      letter-spacing:.01em;
+      white-space:nowrap;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btn-primary{
+      background: linear-gradient(135deg, var(--a3), var(--a1));
+      color:#0b0f1a;
+      border-color: rgba(255,255,255,.10);
+      box-shadow: 0 22px 50px rgba(255,91,61,.18);
+    }
+    .btn-primary:hover{filter:brightness(1.02)}
+    .btn-ghost{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.14);
+      color: var(--text);
+    }
+
+    /* HERO */
+    header{padding: 44px 0 10px;}
+    .hero{display:flex; flex-direction:column; gap:14px;}
+    .hero-card{
+      border-radius: var(--r2);
+      border: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero-pad{padding: 28px;}
+
+    .pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.14);
+      color: var(--text);
+      font-weight: 950;
+      font-size: 13px;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: linear-gradient(135deg, var(--a2), var(--a3));
+      box-shadow: 0 0 0 6px rgba(0,211,167,.10);
+    }
+
+    h1{
+      margin: 18px 0 10px;
+      font-size: clamp(44px, 5.3vw, 72px);
+      line-height: 1.03;
+      letter-spacing: -0.04em;
+    }
+
+    .subcopy{
+      margin:0;
+      font-size: 20px;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 54em;
+    }
+    .subcopy b{color:var(--text)}
+    .hero-actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px;}
+
+    /* Big metrics */
+    .metrics{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+    .metric{
+      border-radius: var(--r2);
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      padding: 18px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .metric .k{
+      font-size: 13px;
+      letter-spacing:.08em;
+      text-transform: uppercase;
+      color: rgba(246,247,251,.68);
+      font-weight: 1000;
+    }
+    .metric .d{
+      margin-top:8px;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 46em;
+    }
+    .num{
+      font-variant-numeric: tabular-nums;
+      font-weight: 1100;
+      letter-spacing:-.03em;
+      font-size: clamp(34px, 4vw, 56px);
+      line-height: 1;
+      background: linear-gradient(135deg, rgba(255,255,255,.95), rgba(255,255,255,.65));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      white-space:nowrap;
+    }
+    .num small{font-size: 16px; color: rgba(246,247,251,.72); font-weight: 950; margin-left:6px;}
+
+    /* Section */
+    section{padding: 54px 0;}
+    .section-head h2{
+      margin:0;
+      font-size: clamp(30px, 3vw, 42px);
+      letter-spacing:-.02em;
+      line-height: 1.15;
+    }
+    .section-head p{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.8;
+      max-width: 56em;
+    }
+
+    /* Cards stack */
+    .stack{display:flex; flex-direction:column; gap:12px; margin-top: 18px;}
+    .card{
+      border-radius: var(--r2);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      padding: 22px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.18);
+    }
+    .card .k{
+      font-weight: 1100;
+      font-size: 20px;
+      letter-spacing:-.01em;
+      margin-bottom: 10px;
+    }
+    .card .v{
+      color: var(--muted);
+      font-size: 16.5px;
+      line-height: 1.85;
+      max-width: 56em;
+    }
+
+    /* How steps */
+    .steps{display:flex; flex-direction:column; gap:12px; margin-top:18px;}
+    .step{
+      border-radius: var(--r2);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      padding: 20px;
+      display:flex;
+      gap:14px;
+      align-items:flex-start;
+    }
+    .badge{
+      width:46px; height:46px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(135deg, rgba(124,92,255,.28), rgba(0,211,167,.22));
+      display:grid; place-items:center;
+      flex:0 0 auto;
+      font-weight: 1100;
+    }
+    .step strong{display:block; font-size: 19px; margin-bottom:6px;}
+    .step p{margin:0; color: var(--muted); font-size: 16px; line-height: 1.8;}
+
+    /* Inline form */
+    .form{
+      margin-top: 18px;
+      border-radius: var(--r2);
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+    .form h3{margin:0 0 8px; font-size: 20px; letter-spacing:-.01em;}
+    .form p{margin:0 0 14px; color:var(--muted); font-size: 16px; line-height: 1.8;}
+
+    .fields{display:grid; grid-template-columns: 1fr 1fr; gap:12px;}
+    .field{display:flex; flex-direction:column; gap:8px;}
+    label{font-weight: 950; font-size: 13px; color: rgba(246,247,251,.86); letter-spacing:.02em;}
+    input, select, textarea{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      padding: 14px 14px;
+      font-size: 16px;
+      outline:none;
+    }
+    textarea{min-height: 110px; resize: vertical;}
+    input::placeholder, textarea::placeholder{color: rgba(246,247,251,.42)}
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(0,211,167,.45);
+      box-shadow: 0 0 0 6px rgba(0,211,167,.14);
+    }
+    .form-actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; align-items:center;}
+    .mini{color: rgba(246,247,251,.66); font-size: 12.5px; line-height:1.65; max-width: 46em;}
+
+    /* FAQ */
+    .faq{
+      margin-top: 18px;
+      border-radius: var(--r2);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      overflow:hidden;
+      box-shadow: 0 18px 50px rgba(0,0,0,.18);
+    }
+    details{padding: 18px 18px; border-bottom: 1px solid rgba(255,255,255,.10);}
+    details:last-child{border-bottom:none}
+    summary{cursor:pointer; list-style:none; font-weight: 1100; font-size: 16px; letter-spacing:-.01em;}
+    summary::-webkit-details-marker{display:none}
+    details p{margin:10px 0 0; color: var(--muted); font-size: 15.5px; line-height:1.85; max-width: 56em;}
+
+    footer{
+      padding: 24px 0 52px;
+      color: rgba(246,247,251,.60);
+      font-size: 13px;
+      line-height:1.7;
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+
+    /* AB hint (small) */
+    .abnote{
+      margin-top: 12px;
+      font-size: 12.5px;
+      color: rgba(246,247,251,.55);
+    }
+    .abnote code{
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      padding: 2px 8px;
+      border-radius: 999px;
+      color: rgba(246,247,251,.78);
+    }
+
+    @media (max-width: 760px){
+      .hero-pad{padding:20px;}
+      .fields{grid-template-columns: 1fr;}
+      h1{font-size: 46px;}
+      .subcopy{font-size: 18px;}
+      section{padding: 48px 0;}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <div class="brand">
+          <div class="mark">LK</div>
+          <div>
+            <strong>ランチケ</strong>
+            <span>食事補助を、iD決済でスマートに</span>
+          </div>
+        </div>
+        <a class="btn btn-primary" href="#form">導入相談する →</a>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container">
+      <div class="hero">
+        <div class="hero-card">
+          <div class="hero-pad">
+            <div class="pill"><span class="dot"></span> “毎日効く福利厚生”を、最小工数で</div>
+
+            <!-- Main copy (AB test) -->
+            <h1 id="mainCopy">社員のランチ、会社が半分出す時代へ。</h1>
+
+            <!-- Sub copy (fixed) -->
+            <p class="subcopy">
+              <b>賃上げより、手取り実感。</b><br>
+              毎日効く福利厚生を、最小工数で。
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#form">導入相談する →</a>
+              <a class="btn btn-ghost" href="#how">仕組みを見る</a>
+            </div>
+
+            <div class="metrics" aria-label="key numbers">
+              <div class="metric">
+                <div>
+                  <div class="k">非課税枠（予定）</div>
+                  <div class="d">制度改正により、月額上限が見直される動きがあります。</div>
+                </div>
+                <div class="num">7,500<small>円 / 月</small></div>
+              </div>
+
+              <div class="metric">
+                <div>
+                  <div class="k">iD加盟店</div>
+                  <div class="d">コンビニ・チェーン店・街の飲食店など、日常の支払い導線で使えます。</div>
+                </div>
+                <div class="num">260<small>万</small></div>
+              </div>
+
+              <div class="metric">
+                <div>
+                  <div class="k">社員の体感</div>
+                  <div class="d">「給料より嬉しい」が起きやすい施策です。</div>
+                </div>
+                <div class="num">実質<small>半額</small></div>
+              </div>
+            </div>
+
+            <div class="abnote">
+              ABテスト用：<code>?v=E</code>（既定） <code>?v=A</code> <code>?v=C</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="benefits">
+    <div class="container">
+      <div class="section-head">
+        <h2>ランチケが“売れる”理由</h2>
+        <p>文章で説得しすぎない。必要なことだけを太く見せて、意思決定を速くします。</p>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <div class="k">社員の満足度が、毎日上がる。</div>
+          <div class="v">ランチが「ちょっと嬉しい」体験に変わります。日々の積み上げでエンゲージメントに効きます。</div>
+        </div>
+
+        <div class="card">
+          <div class="k">人事・総務の工数が、増えない。</div>
+          <div class="v">証憑・条件判定などの運用を、できるだけ巻き取ります。「制度は良いが運用が重い」を潰す設計です。</div>
+        </div>
+
+        <div class="card">
+          <div class="k">同じ会社コストでも、実感が出やすい。</div>
+          <div class="v">税・社保で目減りしにくい設計で、社員の“体感”を最大化。賃上げとは別軸で効く施策に。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="container">
+      <div class="section-head">
+        <h2>仕組みは、3ステップで終わり。</h2>
+        <p>社員がやることは「iDで払う」だけ。運用はランチケ側で最小化します。</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="badge">1</div>
+          <div>
+            <strong>社員はiDで決済（普段通り）</strong>
+            <p>新しいアプリ操作や申請を増やさず、自然に浸透します。</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="badge">2</div>
+          <div>
+            <strong>会社が補助（制度設計に沿って）</strong>
+            <p>対象・条件を整理して、運用が破綻しない形に設計します。</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="badge">3</div>
+          <div>
+            <strong>運用はランチケが代行（負担を最小化）</strong>
+            <p>証憑・条件判定などの“地味に重い”部分を最小化します。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="container">
+      <div class="section-head">
+        <h2>料金は、シンプル。</h2>
+        <p>導入判断を速くするため、料金を隠しません。</p>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <div class="k">サービス利用料</div>
+          <div class="v" style="margin-top:8px;">
+            月額：<b style="color:var(--text); font-size:20px;">700円 / 人</b>　／　初期：<b style="color:var(--text); font-size:20px;">500円 / 人</b><br>
+            <span style="color:rgba(246,247,251,.62); font-size:13px;">※ 補助額（チャージ額）は別途。</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="k">補助額（現行イメージ）</div>
+          <div class="v" style="margin-top:8px;">
+            会社補助：最大 <b style="color:var(--text); font-size:20px;">3,500円 / 月</b>　／　社員負担：最大 <b style="color:var(--text); font-size:20px;">3,500円 / 月</b><br>
+            <span style="color:rgba(246,247,251,.62); font-size:13px;">※ 非課税要件に沿った制度設計が前提（詳細はFAQ）。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="form">
+    <div class="container">
+      <div class="section-head">
+        <h2>まずは、制度設計から相談できます。</h2>
+        <p>対象・条件・規程整備・運用フローまで。貴社に合う形を一緒に設計します。</p>
+      </div>
+
+      <div class="form">
+        <h3>導入相談（無料）｜入力は1分</h3>
+        <p>会社名とメールがあれば返信できます。まだ検討段階でもOKです。</p>
+
+        <form onsubmit="event.preventDefault(); alert('モックのため送信は行いません。実装時はここをフォーム送信に差し替えます。');">
+          <div class="fields">
+            <div class="field">
+              <label>会社名 *</label>
+              <input required placeholder="例）株式会社〇〇" />
+            </div>
+
+            <div class="field">
+              <label>担当者名 *</label>
+              <input required placeholder="例）山田 太郎" />
+            </div>
+
+            <div class="field">
+              <label>メールアドレス *</label>
+              <input required type="email" placeholder="example@company.co.jp" />
+            </div>
+
+            <div class="field">
+              <label>従業員数</label>
+              <select>
+                <option>未選択</option>
+                <option>〜50名</option>
+                <option>51〜200名</option>
+                <option>201〜500名</option>
+                <option>501〜1,000名</option>
+                <option>1,001名〜</option>
+              </select>
+            </div>
+
+            <div class="field" style="grid-column: 1 / -1;">
+              <label>相談したいこと（任意）</label>
+              <textarea placeholder="例）非課税の運用設計／対象の切り分け／費用試算／導入スケジュール など"></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">導入相談を送信する →</button>
+            <div class="mini">
+              ※ 実装時はプライバシーポリシーへのリンクを設置します。<br>
+              ※ 送信内容は導入相談の対応のみに利用します。
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="section-head" style="margin-top:42px;">
+        <h2>よくある質問</h2>
+        <p>細かい説明はここに寄せて、本文は読みやすさ優先。</p>
+      </div>
+
+      <div class="faq">
+        <details>
+          <summary>非課税の条件って、結局なに？</summary>
+          <p>運用条件（社員負担、会社負担の上限など）があります。貴社の状況に合わせて、規程・対象・証憑運用まで設計します。</p>
+        </details>
+        <details>
+          <summary>iDが使える店なら、全部OK？</summary>
+          <p>基本はiD加盟店で利用できますが、制度上の対象カテゴリ整理が必要になる場合があります。導入時に“ルール設計”まで一緒に決めます。</p>
+        </details>
+        <details>
+          <summary>導入まで、どれくらいかかる？</summary>
+          <p>規程整備と対象条件が決まればスムーズです。導入相談でスケジュールをご案内します。</p>
+        </details>
+        <details>
+          <summary>証憑チェックって、必須？</summary>
+          <p>運用方針によります。必要な場合は、負担が増えない形に設計します。</p>
+        </details>
+        <details>
+          <summary>料金は増えたりする？</summary>
+          <p>基本固定です。規模や運用条件により別途ご提案となる場合があります。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      © Lunchke / valuedesign<br>
+      ※ 本ページはデザインモックです。税務・法務表現、数値根拠、施行時期などは最新情報に基づき調整してください。
+    </div>
+  </footer>
+
+  <script>
+    // AB test for main copy: ?v=E (default) / ?v=A / ?v=C
+    (function(){
+      const main = document.getElementById('mainCopy');
+      const params = new URLSearchParams(location.search);
+      const v = (params.get('v') || 'E').toUpperCase();
+
+      const variants = {
+        E: '社員のランチ、会社が半分出す時代へ。',
+        A: '賃上げの前に、手取りを増やす。',
+        C: '福利厚生は、導入より運用が重い。'
+      };
+
+      if(variants[v]) main.textContent = variants[v];
+
+      // Optional: reflect variant in title for screenshots/testing
+      document.title = `ランチケ｜${variants[v] || variants.E}`;
+    })();
+  </script>
+</body>
+</html>
